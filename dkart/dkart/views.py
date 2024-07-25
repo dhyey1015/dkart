@@ -5,7 +5,7 @@ def home(request):
     product = Product.objects.all().filter(is_available = True)
     
     context = {
-        'products':product
+        'products':product,
     }
 
     return render(request,'home.html',context)
