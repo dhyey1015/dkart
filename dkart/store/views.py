@@ -8,6 +8,7 @@ def store(request):
     
     context = {
         'products':product,
+        'product_count': product_count,
     }
 
     
