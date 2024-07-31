@@ -1,4 +1,5 @@
 from django.shortcuts import render 
+from django.http import HttpResponse
 from store.models import Product
 
 def home(request):
@@ -9,4 +10,7 @@ def home(request):
     }
 
     return render(request,'home.html',context)
+
+def test(request):
+    return render(request, "test.html")
     
