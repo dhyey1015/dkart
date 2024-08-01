@@ -67,13 +67,18 @@ def cart(request,total=0,quanitity=0,cart_items=None):
         for cart_item in cart_items:
             total += (cart_item.product.price * cart_item.quantity)
             quanitity += cart_item.quantity
-        tax = (2*total)/100
+            
+        tax_rate = 0.2
+        tax = total+tax_rate
         grand_total = total + tax
             
     except Cart.DoesNotExist:
-        pass 
+        cart_items = []
+        tax=0
+        grand_total =0
     
     context = {
+        
         'total':total,
         'quantity': quanitity,
         'cart_items': cart_items,
