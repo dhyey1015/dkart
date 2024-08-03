@@ -148,7 +148,7 @@ MESSAGE_TAGS = {
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'oflightking1@gmail.com'
-EMAIL_HOST_PASSWORD = 'Dhyey_.1015'
+EMAIL_HOST_PASSWORD = 'ozjyizyiieberpqp'
 EMAIL_USE_TLS = True
 
 
