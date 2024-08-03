@@ -8,7 +8,7 @@ class Myaccountmanager(BaseUserManager):
         
         if not email:
             raise ValueError('user must have an email address')
-        if not username:
+        if not username:    
             raise ValueError('user must have a username')
         
         user = self.model(
@@ -17,6 +17,7 @@ class Myaccountmanager(BaseUserManager):
             first_name = first_name,
             last_name = last_name,
         )
+        
         
         user.set_password(password)
         user.save(using=self._db)
