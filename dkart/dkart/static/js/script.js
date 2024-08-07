@@ -59,4 +59,21 @@ $(document).ready(function() {
 // jquery end
 
 
+const express = require('express');
+const cors = require('cors');
+const app = express();
+
+app.use(cors()); // Allow all origins by default
+app.use(express.json()); // Parse JSON bodies
+
+app.post('/accounts/login', (req, res) => {
+  // Handle login
+  res.json({ success: true });
+});
+
+app.listen(8000, () => {
+  console.log('Server is running on http://127.0.0.1:8000');
+});
+
+
 

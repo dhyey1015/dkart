@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'accounts',
     'store',
     'carts',
+    'corsheaders', #for CORS problem
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware', #for CORS problem
+    'django.middleware.common.CommonMiddleware', #for CORS problem
 ]
 
 ROOT_URLCONF = 'dkart.urls'
@@ -58,7 +61,7 @@ ROOT_URLCONF = 'dkart.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [f'{BASE_DIR}/templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -156,4 +159,14 @@ EMAIL_USE_TLS = True
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Allow all origins (be cautious with this in production)
+CORS_ALLOW_ALL_ORIGINS = True #for CORS Problem
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    
+]
 

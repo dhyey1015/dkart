@@ -3,6 +3,8 @@ from .forms import RegistrationForm
 from .models import Account
 from django.contrib import messages,auth
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+import json
 from django.http import HttpResponse
 
 #verification of email
@@ -12,11 +14,24 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
+from django.http import JsonResponse
 
 # Create your views here.
-
+@csrf_exempt
 def register(request):
+    
+    
     if request.method == 'POST':
+        
+        #try:
+          #  data = json.loads(request.body)
+          #  first_name = data.get('first_name', None)
+          #  last_name = data.get('last_name', None)
+          #  email = data.get('email', None)
+           # phone_number = data.get('phone_number', None)
+           # password = data.get('password', None)
+           # username = email.split("@")[0]
+            
         form = RegistrationForm(request.POST)
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
@@ -37,39 +52,93 @@ def register(request):
                     'domain': current_site,
                     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                     'token': default_token_generator.make_token(user),
-                }) 
+            }) 
             to_email = email
             send_email = EmailMessage(mail_subject, message, to = [to_email])
             
             send_email.send()
             
-            #messages.success(request, 'Thank you fro registering with us. We have  send you an verification email you your email address.please verify it')
-            return redirect('/accounts/login/?command=verification&email='+email)
-    else:      
-        form =  RegistrationForm()
+            messages.success(request, 'Thank you fro registering with us. We have  send you an verification email you your email address.please verify it')
+        return redirect('/accounts/login/?command=verification&email='+email)
+            #return JsonResponse({
+             #   'success': True,
+             #   'message': "You are now Registered",
+             #   'user': {
+             #       'email': email,
+              #      'username': username
+              #  }
+           # })
+            
+        #except json.JSONDecodeError:
+           # return JsonResponse({
+              #  'success': False,
+            #    'message': "Invalid JSON"
+           # }, status=400)
         
+    #else: 
+        #return JsonResponse({
+         #   'success': False,
+          #  'message': "Invalid something"
+       # }, status=401) 
+        
+            
+    form =  RegistrationForm() 
     context= {
         'form':form,
     }
-    return render(request, 'accounts/register.html', context) 
+    return render(request, 'accounts/register.html', context) #<_---------)context) here
 
+@csrf_exempt
 def login(request):
+
     if request.method == 'POST':
-        email =  request.POST['email']
+        #try:
+        #data = json.loads(request.body)
+        #email = data.get('email', None)
+        #password = data.get('password', None)
+        email = request.POST['email']
         password = request.POST['password']
-        
+            
         user = auth.authenticate(email=email, password=password)
-        
+            
         if user is not None:
             auth.login(request, user)
             messages.success(request, "You are now logged in")  
-            return redirect('dashboard')   
-        
+            return redirect('dashboard')
+            
+            # return JsonResponse({
+                #  'success': True,
+                #  'message': "You are now logged in",
+                #  'user': {
+                #       'email': user.email
+                    #}
+            #})
+                   
+            
         else: 
             messages.error(request, "Invalid login credentials")
             return redirect('login')
-           
+        
     return render(request, 'accounts/login.html')
+                
+            #return JsonResponse({
+                #  'success': False,
+                #  'message': "Invalid login credentials"
+            #}, status=401)
+               
+            
+            
+        #except json.JSONDecodeError:
+            #return JsonResponse({
+               # 'success': False,
+                #'message': "Invalid JSON"
+           # }, status=400)
+        
+    #return JsonResponse({
+      #  'success': False,
+     #   'message': "Invalid request method"
+    #}, status=400)       
+    
 
 @login_required(login_url = 'login')
 def logout(request):
