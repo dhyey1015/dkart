@@ -2,13 +2,93 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from carts.models import CartItem         
 from .forms import OrderForm
-from .models import Order      
-import datetime                                                                                                                                                                                                                                                                                      
+from store.models import Product
+from .models import Order, OrderProduct, Payment
+import datetime   
+import json    
+
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import EmailMessage
+from django.http import JsonResponse                                                                                                                                                                                                                                                                               
 
 # Create your views here.
 
 def payments(request):
-    return render(request, 'orders/payments.html')
+    #store transaction details inside payments model(not working yet)
+    # body = json.loads(request.body)
+    # order = Order.objects.get(user = request.user, is_ordered = False, order_number=body['orderID'])
+    
+    # payment = Payment(
+    #     user = request.user,
+    #     payment_it = body['transID'],
+    #     payment_method = body['payment_method'],
+    #     amount_paid = order.order_total,
+    #     status = body['status'],
+    # )
+    # payment.save()
+    
+    # order.payment = payment
+    # order.is_ordered = True
+    # order.save()
+    
+    #to store logic body
+    #----------------------------------------------------
+    
+    
+    #Move the cart items  to OrderProduct Table
+    # cart_item = CartItem.objects.filter(user = request.user)
+    
+    # for item in cart_item:
+    #     orderproduct = OrderProduct()
+    #     orderproduct.order_id = order.id
+    #    # orderproduct.payment = payment
+    #     orderproduct.user_id = request.user.id 
+    #     orderproduct.product_id = item.product_id
+    #     orderproduct.quantity = item.quantity
+    #     orderproduct.product_price = item.product.price
+    #     orderproduct.ordered = True
+    #     orderproduct.save()
+        
+    #     cart_item = CartItem.objects.get(id=item.id)
+    #     product_variation = cart_item.variations.all()
+    #     orderproduct  = OrderProduct.objects.get(id= OrderProduct.id)
+    #     orderproduct.variations.set(product_variation)
+    #     orderproduct.save()
+        
+    #     #reduce  the quantity of in stock for sold products
+    #     product = Product.objects.get(id = item.product_id)
+    #     product.stock -= item.quantity
+    #     product.save()
+        
+        
+    # #clear the cart after order is placed
+    # CartItem.objects.filter(user = request.user).delete()
+    
+    # #sending an prder received email to customer
+    # mail_subject = "Thank you for your order!"
+    #         #sending email body
+    # message  = render_to_string('orders/order_recieved_email.html', {
+    #         'user':request.user,
+    #         'order': order
+    # }) 
+    # to_email = request.user.email
+    # send_email = EmailMessage(mail_subject, message, to = [to_email])
+    # send_email.send()
+    
+    
+    # #send order number and transaction id back to sendData method via jsonResponse(this won't work!!!)
+    
+    # data = {
+    #     'order_number': order_number,
+    #     'transID': payment.payment_id,
+    # }
+    # return JsonResponse(data)
+
+     return render(request, 'orders/payments.html')
 
 def place_order(request, total = 0, quantity = 0):
     current_user = request.user
@@ -79,5 +159,8 @@ def place_order(request, total = 0, quantity = 0):
             return render(request, 'orders/payments.html', context)
         else:
             return redirect('checkout')
+        
+def order_complete(request):
+    return render(request, 'orders/order_complete.html')
         
         
