@@ -43,11 +43,7 @@ class UserForm(forms.ModelForm):
         super(UserForm, self).__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs['class']= 'form-control'
-            
-
-    
-            
-        
+             
         
 class UserProfileForm(forms.ModelForm):
     profile_picture = forms.ImageField(required=False, error_messages={'invalid':("image files only")}, widget=forms.FileInput)
