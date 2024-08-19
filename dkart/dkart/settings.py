@@ -56,8 +56,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware', #for CORS problem
-    'django.middleware.common.CommonMiddleware', #for CORS problem
 ]
 
 SESSION_EXPIRE_SECONDS = 3600  # 1 hour
@@ -171,11 +169,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Allow all origins (be cautious with this in production)
-CORS_ALLOW_ALL_ORIGINS = True #for CORS Problem
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    
-]
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 
