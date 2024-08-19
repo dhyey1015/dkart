@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default = True, cast= bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS')
 
 
 # Application definition
@@ -144,7 +144,6 @@ STATICFILES_DIRS= [
 
 
 # media file config----------------------
-#STATIC_ROOT = BASE_DIR /'static'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR /'media'
 
