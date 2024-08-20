@@ -5,7 +5,8 @@ from store.models import Product,ReviewRating
 def home(request):
     product = Product.objects.all().filter(is_available = True).order_by('created_date')
     
-    #get the reviews
+    #get the reviews\
+    reviews = None
     for product1 in product:
         reviews = ReviewRating.objects.filter(product_id = product1.id, status = True)
     
