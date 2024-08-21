@@ -154,7 +154,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR /'static/'
+STATIC_ROOT = BASE_DIR /'static'
 STATICFILES_DIRS= [
     'dkart/static',  
 ]
@@ -172,7 +172,9 @@ AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
 #STORAGES settings 
 #BASIC STORAGE CONFIGURATIONS FOR S3
 AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
 AWS_S3_FILE_OVERWRITE = False
 STORAGES = {
     # Media files
