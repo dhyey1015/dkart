@@ -48,13 +48,6 @@ def register(request):
             user = Account.objects.create_user(first_name = first_name, last_name=last_name, username=username, email=email, password=password)
             user.phone_number = phone_number
             user.save()
-            
-            #Create user profile
-            profile = UserProfile()
-            profile.user_id = user.id
-            profile.profile_picture = 'default/default-user.jpeg'
-            profile.save()
-            
             #USER ACTIVATION 
             current_site =  get_current_site(request)
             mail_subject = "Please activate your account"
@@ -71,7 +64,12 @@ def register(request):
             send_email.send()
             
             messages.success(request, 'Thank you fro registering with us. We have  send you an verification email you your email address.please verify it')
-        return redirect('/accounts/login/?command=verification&email='+email)
+            return redirect('/accounts/login/?command=verification&email='+email)
+        
+        else:
+    # Handle the case where the form is not valid
+            messages.error(request, 'There was an error with your registration. Please check the form and try again.')
+            return redirect('register')  # Or render the form again with errors
             #return JsonResponse({
              #   'success': True,
              #   'message': "You are now Registered",
@@ -100,7 +98,6 @@ def register(request):
     }
     return render(request, 'accounts/register.html', context) #<_---------)context) here
 
-#@csrf_exempt
 def login(request):
 
     if request.method == 'POST':
