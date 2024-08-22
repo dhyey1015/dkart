@@ -189,7 +189,7 @@ STORAGES = {
 }
 
 # media file config----------------------
-MEDIA_URL =  '/media/'
+MEDIA_URL =  f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 MEDIA_ROOT = BASE_DIR /'media'
 
 from django.contrib.messages import constants as messages
