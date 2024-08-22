@@ -11,3 +11,5 @@
 
 env
 .env
+dkart/data.json
+db.sqlite3
