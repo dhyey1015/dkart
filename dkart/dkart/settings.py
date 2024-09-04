@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-from decouple import config
+# from decouple import os.path.join
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = os.path.join('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default = True, cast= bool)
+DEBUG = bool(os.environ.get('DEBUG'))
 
 ALLOWED_HOSTS =[
     '*', 'ecomm-env.eba-2u7sfnzw.us-west-2.elasticbeanstalk.com',
@@ -96,7 +96,7 @@ AUTH_USER_MODEL = 'accounts.Account'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# Database Configuration
+# Database os.path.joinuration
 
 if 'RDS_DB_NAME' in os.environ:
     DATABASES = {
@@ -161,15 +161,15 @@ USE_TZ = True
 
 
 
-#AWS S3 Static Files Configuration
-# AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+#AWS S3 Static Files os.path.joinuration
+# AWS_ACCESS_KEY_ID = os.path.join('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = os.path.join('AWS_SECRET_ACCESS_KEY')
 
 
-# AWS CONFIGURATION
-AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+# AWS os.path.joinURATION
+AWS_ACCESS_KEY_ID = os.path.join("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.path.join("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = os.path.join("AWS_STORAGE_BUCKET_NAME")
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 AWS_S3_FILE_OVERWRITE = False
 
@@ -188,7 +188,7 @@ STORAGES = {
     },
 }
 
-# media file config----------------------
+# media file os.path.join----------------------
 MEDIA_URL =  f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 MEDIA_ROOT = BASE_DIR /'media'
 
@@ -198,12 +198,12 @@ MESSAGE_TAGS = {
     messages.ERROR: "danger",
 }
 
-#SMTP configuration
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT', cast=int)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast = bool)
+#SMTP os.path.joinuration
+EMAIL_HOST = os.path.join('EMAIL_HOST')
+EMAIL_PORT = os.path.join('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER = os.path.join('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.path.join('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = os.path.join('EMAIL_USE_TLS', cast = bool)
 
 
 # Default primary key field type
